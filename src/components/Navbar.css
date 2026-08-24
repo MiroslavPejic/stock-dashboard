@@ -1,0 +1,195 @@
+/* =========================
+   Navbar
+   ========================= */
+
+.navbar {
+  border-bottom: 1px solid #1e293b;
+
+  background: #0f172a;
+}
+
+
+.navbar-container {
+  max-width: 1200px;
+
+  height: 72px;
+
+  margin: 0 auto;
+  padding: 0 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+/* =========================
+   Logo
+   ========================= */
+
+.navbar-logo {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 10px;
+
+  color: white;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  letter-spacing: -0.3px;
+
+  text-decoration: none;
+
+  transition: opacity 0.2s ease;
+}
+
+
+.navbar-logo:hover {
+  opacity: 0.75;
+}
+
+
+.navbar-logo-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  border-radius: 8px;
+
+  background: white;
+
+  color: #0f172a;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+.navbar-logo-text {
+  white-space: nowrap;
+}
+
+
+/* =========================
+   Navigation Links
+   ========================= */
+
+.navbar-links {
+  display: flex;
+
+  align-items: center;
+
+  gap: 28px;
+}
+
+
+.nav-link {
+  position: relative;
+
+  padding: 25px 0;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+
+.nav-link:hover {
+  color: white;
+}
+
+
+/* Active link */
+
+.nav-link.active {
+  color: white;
+
+  font-weight: 600;
+}
+
+
+/* Active underline */
+
+.nav-link.active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 2px;
+
+  border-radius: 2px;
+
+  background: white;
+}
+
+
+/* =========================
+   Mobile
+   ========================= */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    height: auto;
+  }
+
+  .navbar-container {
+    padding: 0 24px;
+  }
+
+  .navbar-links {
+    gap: 22px;
+  }
+
+  .nav-link {
+    padding: 27px 0;
+
+    font-size: 13px;
+  }
+
+}
+
+
+@media (max-width: 520px) {
+
+  .navbar {
+    min-height: 64px;
+  }
+
+  .navbar-container {
+    padding: 0 16px;
+  }
+
+  .navbar-logo {
+    font-size: 16px;
+  }
+
+  .navbar-logo-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .navbar-links {
+    gap: 14px;
+  }
+
+  .nav-link {
+    font-size: 12px;
+  }
+
+}
