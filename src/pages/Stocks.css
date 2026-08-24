@@ -811,3 +811,94 @@
   }
 
 }
+/* ========================================
+   Favourite Button
+======================================== */
+
+.stock-overview {
+  position: relative;
+}
+
+
+.favourite-button,
+.favourite-login-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 9px 14px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 8px;
+
+  color: #475569;
+
+  background: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.favourite-button:hover,
+.favourite-login-button:hover {
+  border-color: #cbd5e1;
+
+  background: #f8fafc;
+
+  color: #0f172a;
+}
+
+
+.favourite-button:disabled {
+  opacity: 0.6;
+
+  cursor: wait;
+}
+
+
+.favourite-button.is-favourite {
+  border-color: #fde68a;
+
+  color: #b45309;
+
+  background: #fffbeb;
+}
+
+
+.favourite-button.is-favourite:hover {
+  border-color: #fcd34d;
+
+  background: #fef3c7;
+}
+
+
+.favourite-star {
+  font-size: 17px;
+
+  line-height: 1;
+}
+
+
+.favourite-login-button span {
+  font-size: 18px;
+
+  line-height: 1;
+}
