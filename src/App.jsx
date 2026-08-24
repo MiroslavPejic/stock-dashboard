@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 
-import Home from "./pages/Home";
-import Stocks from "./pages/Stocks";
-import About from "./pages/About";
+import Home from "./pages/Home/Home";
+import Stocks from "./pages/Stocks/Stocks";
+import About from "./pages/About/About";
 
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Favourites from "./pages/Favourites";
+import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
+import Favourites from "./pages/Favourites/Favourites";
 
 
 function App() {

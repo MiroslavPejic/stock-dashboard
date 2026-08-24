@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 import {
   getFavourites,
   removeFavourite,
-} from "../lib/favourites";
+} from "../../lib/favourites";
 
-import { getYahooHistory } from "../api/yahooFinance";
+import { getYahooHistory } from "../../api/yahooFinance";
 
 import "./Favourites.css";
 

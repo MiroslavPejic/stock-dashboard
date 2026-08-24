@@ -2,16 +2,16 @@ import { useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
-import "./Login.css";
+import "./Signup.css";
 
 
-function Login() {
+function Signup() {
 
   const navigate = useNavigate();
 
-  const { signIn } = useAuth();
+  const { signUp } = useAuth();
 
 
   const [email, setEmail] = useState("");
@@ -19,6 +19,8 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
+
+  const [message, setMessage] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -29,12 +31,15 @@ function Login() {
 
     setError("");
 
+    setMessage("");
+
     setLoading(true);
 
 
     const {
+      data,
       error,
-    } = await signIn(
+    } = await signUp(
       email,
       password
     );
@@ -50,7 +55,24 @@ function Login() {
     }
 
 
-    navigate("/");
+    /*
+     * If email confirmation is enabled,
+     * Supabase will normally return a user
+     * but no active session.
+     */
+
+    if (data.user && !data.session) {
+
+      setMessage(
+        "Account created. Please check your email to confirm your account."
+      );
+
+    } else {
+
+      navigate("/");
+
+    }
+
 
     setLoading(false);
   };
@@ -63,18 +85,26 @@ function Login() {
       <div className="auth-card">
 
         <h1>
-          Welcome back
+          Create your account
         </h1>
 
         <p className="auth-description">
-          Log in to access your personalised
-          Stock Dashboard.
+          Create an account to save your
+          favourite stocks and personalise
+          your dashboard.
         </p>
 
 
         {error && (
           <div className="auth-error">
             {error}
+          </div>
+        )}
+
+
+        {message && (
+          <div className="auth-message">
+            {message}
           </div>
         )}
 
@@ -115,7 +145,8 @@ function Login() {
                 setPassword(event.target.value)
               }
               required
-              placeholder="Your password"
+              minLength={6}
+              placeholder="At least 6 characters"
             />
 
           </div>
@@ -128,8 +159,8 @@ function Login() {
           >
 
             {loading
-              ? "Logging in..."
-              : "Log in"}
+              ? "Creating account..."
+              : "Create account"}
 
           </button>
 
@@ -138,10 +169,10 @@ function Login() {
 
         <p className="auth-footer">
 
-          Don't have an account?{" "}
+          Already have an account?{" "}
 
-          <Link to="/signup">
-            Create one
+          <Link to="/login">
+            Log in
           </Link>
 
         </p>
@@ -153,4 +184,4 @@ function Login() {
 }
 
 
-export default Login;
+export default Signup;

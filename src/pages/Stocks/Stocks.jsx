@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { getYahooHistory } from "../api/yahooFinance";
+import { getYahooHistory } from "../../api/yahooFinance";
 
 import {
   calculateSMA,
   calculateRSI,
-} from "../api/indicators";
+} from "../../api/indicators";
 
-import StockChart from "../components/StockChart";
+import StockChart from "../../components/StockChart/StockChart";
 
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 import {
   getFavourites,
   addFavourite,
   removeFavourite,
-} from "../lib/favourites";
+} from "../../lib/favourites";
 
 import "./Stocks.css";
 

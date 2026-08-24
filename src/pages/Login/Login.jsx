@@ -2,16 +2,16 @@ import { useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
-import "./Signup.css";
+import "./Login.css";
 
 
-function Signup() {
+function Login() {
 
   const navigate = useNavigate();
 
-  const { signUp } = useAuth();
+  const { signIn } = useAuth();
 
 
   const [email, setEmail] = useState("");
@@ -19,8 +19,6 @@ function Signup() {
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
-
-  const [message, setMessage] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -31,15 +29,12 @@ function Signup() {
 
     setError("");
 
-    setMessage("");
-
     setLoading(true);
 
 
     const {
-      data,
       error,
-    } = await signUp(
+    } = await signIn(
       email,
       password
     );
@@ -55,24 +50,7 @@ function Signup() {
     }
 
 
-    /*
-     * If email confirmation is enabled,
-     * Supabase will normally return a user
-     * but no active session.
-     */
-
-    if (data.user && !data.session) {
-
-      setMessage(
-        "Account created. Please check your email to confirm your account."
-      );
-
-    } else {
-
-      navigate("/");
-
-    }
-
+    navigate("/");
 
     setLoading(false);
   };
@@ -85,26 +63,18 @@ function Signup() {
       <div className="auth-card">
 
         <h1>
-          Create your account
+          Welcome back
         </h1>
 
         <p className="auth-description">
-          Create an account to save your
-          favourite stocks and personalise
-          your dashboard.
+          Log in to access your personalised
+          Stock Dashboard.
         </p>
 
 
         {error && (
           <div className="auth-error">
             {error}
-          </div>
-        )}
-
-
-        {message && (
-          <div className="auth-message">
-            {message}
           </div>
         )}
 
@@ -145,8 +115,7 @@ function Signup() {
                 setPassword(event.target.value)
               }
               required
-              minLength={6}
-              placeholder="At least 6 characters"
+              placeholder="Your password"
             />
 
           </div>
@@ -159,8 +128,8 @@ function Signup() {
           >
 
             {loading
-              ? "Creating account..."
-              : "Create account"}
+              ? "Logging in..."
+              : "Log in"}
 
           </button>
 
@@ -169,10 +138,10 @@ function Signup() {
 
         <p className="auth-footer">
 
-          Already have an account?{" "}
+          Don't have an account?{" "}
 
-          <Link to="/login">
-            Log in
+          <Link to="/signup">
+            Create one
           </Link>
 
         </p>
@@ -184,4 +153,4 @@ function Signup() {
 }
 
 
-export default Signup;
+export default Login;
