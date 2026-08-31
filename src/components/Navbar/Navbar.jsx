@@ -12,6 +12,9 @@ function Navbar() {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const [mobileMenuOpen, setMobileMenuOpen] =
+    useState(false);
+
   const menuRef = useRef(null);
 
 
@@ -44,6 +47,35 @@ function Navbar() {
       document.removeEventListener(
         "mousedown",
         handleClickOutside
+      );
+
+    };
+
+  }, []);
+
+
+  useEffect(() => {
+
+    const handleResize = () => {
+
+      if (window.innerWidth > 900) {
+        setMobileMenuOpen(false);
+      }
+
+    };
+
+
+    window.addEventListener(
+      "resize",
+      handleResize
+    );
+
+
+    return () => {
+
+      window.removeEventListener(
+        "resize",
+        handleResize
       );
 
     };
@@ -113,6 +145,10 @@ function Navbar() {
         <NavLink
           to="/"
           className="navbar-logo"
+          onClick={() => {
+            setMobileMenuOpen(false);
+            setMenuOpen(false);
+          }}
         >
 
           <span className="navbar-logo-icon">
@@ -126,14 +162,40 @@ function Navbar() {
         </NavLink>
 
 
+        <button
+          type="button"
+          className={`navbar-menu-toggle ${
+            mobileMenuOpen ? "open" : ""
+          }`}
+          aria-label="Toggle navigation"
+          aria-expanded={mobileMenuOpen}
+          onClick={() =>
+            setMobileMenuOpen(
+              !mobileMenuOpen
+            )
+          }
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+
         {/* Navigation */}
 
-        <div className="navbar-links">
+        <div
+          className={`navbar-links ${
+            mobileMenuOpen ? "open" : ""
+          }`}
+        >
 
           <NavLink
             to="/"
             className={({ isActive }) =>
               `nav-link ${isActive ? "active" : ""}`
+            }
+            onClick={() =>
+              setMobileMenuOpen(false)
             }
           >
             Home
@@ -145,6 +207,9 @@ function Navbar() {
             className={({ isActive }) =>
               `nav-link ${isActive ? "active" : ""}`
             }
+            onClick={() =>
+              setMobileMenuOpen(false)
+            }
           >
             Stocks
           </NavLink>
@@ -154,6 +219,9 @@ function Navbar() {
             to="/about"
             className={({ isActive }) =>
               `nav-link ${isActive ? "active" : ""}`
+            }
+            onClick={() =>
+              setMobileMenuOpen(false)
             }
           >
             About
@@ -171,6 +239,9 @@ function Navbar() {
                 className={({ isActive }) =>
                   `nav-link ${isActive ? "active" : ""}`
                 }
+                onClick={() =>
+                  setMobileMenuOpen(false)
+                }
               >
                 Login
               </NavLink>
@@ -179,6 +250,9 @@ function Navbar() {
               <NavLink
                 to="/signup"
                 className="nav-signup"
+                onClick={() =>
+                  setMobileMenuOpen(false)
+                }
               >
                 Sign Up
               </NavLink>
@@ -251,9 +325,10 @@ function Navbar() {
                   <Link
                     to="/dashboard"
                     className="account-dropdown-link"
-                    onClick={() =>
-                      setMenuOpen(false)
-                    }
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setMobileMenuOpen(false);
+                    }}
                   >
                     <span>▣</span>
                     My Dashboard
@@ -263,9 +338,10 @@ function Navbar() {
                   <Link
                     to="/favourites"
                     className="account-dropdown-link"
-                    onClick={() =>
-                      setMenuOpen(false)
-                    }
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setMobileMenuOpen(false);
+                    }}
                   >
                     <span>★</span>
                     Favourite Stocks

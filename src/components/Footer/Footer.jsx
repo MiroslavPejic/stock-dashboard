@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import "./Footer.css";
 
 function Footer() {
@@ -8,10 +10,10 @@ function Footer() {
 
         <div className="footer-brand">
 
-          <a href="/" className="footer-logo">
+          <Link to="/" className="footer-logo">
             <span className="footer-logo-icon">↗</span>
             Stock Dashboard
-          </a>
+          </Link>
 
           <p>
             Simple tools for exploring and analysing
@@ -27,9 +29,9 @@ function Footer() {
 
             <h3>Explore</h3>
 
-            <a href="/">Home</a>
-            <a href="/stocks">Stocks</a>
-            <a href="/about">About</a>
+            <Link to="/">Home</Link>
+            <Link to="/stocks">Stocks</Link>
+            <Link to="/about">About</Link>
 
           </div>
 

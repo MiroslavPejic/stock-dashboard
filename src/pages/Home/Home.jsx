@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import "./Home.css";
 
 function Home() {
@@ -23,13 +25,13 @@ function Home() {
           </p>
 
           <div className="hero-buttons">
-            <a href="/stocks" className="primary-button">
+            <Link to="/stocks" className="primary-button">
               Explore Stocks
-            </a>
+            </Link>
 
-            <a href="/about" className="secondary-button">
+            <Link to="/about" className="secondary-button">
               Learn More
-            </a>
+            </Link>
           </div>
         </div>
       </section>

@@ -319,6 +319,79 @@ GET /api/stocks/:symbol
 
 For example:
 
+------------------------------------------------------------------------
+
+# Deploying To AWS Amplify (Frontend) + Lambda (Yahoo API)
+
+Amplify Hosting serves the React frontend only.
+`server/server.js` does not run in static hosting.
+
+To keep Yahoo Finance data:
+
+1.  Deploy a Lambda function using:
+
+   ``` text
+   server/lambda/stockApi.mjs
+   ```
+
+2.  Expose it through API Gateway with route:
+
+   ``` text
+   GET /api/stocks/{symbol}
+   ```
+
+3.  Enable CORS on that API route.
+
+4.  In Amplify environment variables, set:
+
+   ``` text
+   VITE_STOCK_API_URL=https://YOUR_API_GATEWAY_DOMAIN
+   ```
+
+   Example:
+
+   ``` text
+   VITE_STOCK_API_URL=https://abc123.execute-api.eu-west-2.amazonaws.com/prod
+   ```
+
+5.  Redeploy Amplify.
+
+The frontend will call:
+
+``` text
+${VITE_STOCK_API_URL}/api/stocks/:symbol
+```
+
+For local development (without setting `VITE_STOCK_API_URL`), the app
+still falls back to:
+
+``` text
+http://localhost:3001
+```
+
+## Packaging Lambda Dependencies
+
+If Lambda shows `Cannot find package 'yahoo-finance2'`, deploy a zip
+that includes `node_modules`.
+
+From the project root:
+
+``` bash
+chmod +x server/lambda/build-lambda-package.sh
+./server/lambda/build-lambda-package.sh
+```
+
+Upload the generated file:
+
+``` text
+server/lambda/dist/stock-api-lambda.zip
+```
+
+Lambda settings:
+
+- Runtime: Node.js 20.x or 22.x
+- Handler: `index.handler`
+
 ``` text
 /api/stocks/AAPL
 ```
