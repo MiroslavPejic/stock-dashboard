@@ -25,24 +25,107 @@ const MA_OPTIONS = [
   {
     key: "sma20",
     label: "20 SMA",
-    colour: "#3b82f6",
+    colour: {
+      light: "#3b82f6",
+      dark: "#63aaff",
+    },
   },
   {
     key: "sma50",
     label: "50 SMA",
-    colour: "#8b5cf6",
+    colour: {
+      light: "#8b5cf6",
+      dark: "#b48bff",
+    },
   },
   {
     key: "sma100",
     label: "100 SMA",
-    colour: "#f59e0b",
+    colour: {
+      light: "#f59e0b",
+      dark: "#ffc14d",
+    },
   },
   {
     key: "sma200",
     label: "200 SMA",
-    colour: "#ef4444",
+    colour: {
+      light: "#ef4444",
+      dark: "#ff7f88",
+    },
   },
 ];
+
+
+function getChartTheme(mode) {
+  if (mode === "dark") {
+    return {
+      layout: {
+        background: {
+          type: ColorType.Solid,
+          color: "#0f1f31",
+        },
+        textColor: "#95acc4",
+      },
+      grid: {
+        vertLines: {
+          color: "#1c334a",
+        },
+        horzLines: {
+          color: "#1c334a",
+        },
+      },
+      rightPriceScale: {
+        borderColor: "#274763",
+      },
+      timeScale: {
+        borderColor: "#274763",
+      },
+      lineSeriesColor: "#d4e6f7",
+      candleColors: {
+        upColor: "#2dc79d",
+        downColor: "#ff6d77",
+        borderUpColor: "#2dc79d",
+        borderDownColor: "#ff6d77",
+        wickUpColor: "#2dc79d",
+        wickDownColor: "#ff6d77",
+      },
+    };
+  }
+
+  return {
+    layout: {
+      background: {
+        type: ColorType.Solid,
+        color: "#ffffff",
+      },
+      textColor: "#64748b",
+    },
+    grid: {
+      vertLines: {
+        color: "#f1f5f9",
+      },
+      horzLines: {
+        color: "#f1f5f9",
+      },
+    },
+    rightPriceScale: {
+      borderColor: "#e2e8f0",
+    },
+    timeScale: {
+      borderColor: "#e2e8f0",
+    },
+    lineSeriesColor: "#0f172a",
+    candleColors: {
+      upColor: "#16a34a",
+      downColor: "#dc2626",
+      borderUpColor: "#16a34a",
+      borderDownColor: "#dc2626",
+      wickUpColor: "#16a34a",
+      wickDownColor: "#dc2626",
+    },
+  };
+}
 
 
 function StockChart({ data }) {
@@ -65,6 +148,20 @@ function StockChart({ data }) {
     sma100: true,
     sma200: true,
   });
+
+  const [themeMode, setThemeMode] = useState(
+    () =>
+      document.documentElement.getAttribute(
+        "data-theme"
+      ) === "dark"
+        ? "dark"
+        : "light"
+  );
+
+  const chartTheme = useMemo(
+    () => getChartTheme(themeMode),
+    [themeMode]
+  );
 
 
   /*
@@ -175,6 +272,37 @@ function StockChart({ data }) {
   ]);
 
 
+  useEffect(() => {
+
+    const rootElement =
+      document.documentElement;
+
+    const observer = new MutationObserver(
+      () => {
+        setThemeMode(
+          rootElement.getAttribute(
+            "data-theme"
+          ) === "dark"
+            ? "dark"
+            : "light"
+        );
+      }
+    );
+
+
+    observer.observe(rootElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+
+    return () => {
+      observer.disconnect();
+    };
+
+  }, []);
+
+
   /*
    * Create the chart once.
    */
@@ -186,34 +314,29 @@ function StockChart({ data }) {
     }
 
 
+    const initialTheme = getChartTheme(
+      document.documentElement.getAttribute(
+        "data-theme"
+      ) === "dark"
+        ? "dark"
+        : "light"
+    );
+
+
     const chart = createChart(
       chartContainerRef.current,
       {
-        layout: {
-          background: {
-            type: ColorType.Solid,
-            color: "#ffffff",
-          },
+        layout: initialTheme.layout,
 
-          textColor: "#64748b",
-        },
-
-        grid: {
-          vertLines: {
-            color: "#f1f5f9",
-          },
-
-          horzLines: {
-            color: "#f1f5f9",
-          },
-        },
+        grid: initialTheme.grid,
 
         crosshair: {
           mode: CrosshairMode.Normal,
         },
 
         rightPriceScale: {
-          borderColor: "#e2e8f0",
+          borderColor:
+            initialTheme.rightPriceScale.borderColor,
 
           scaleMargins: {
             top: 0.08,
@@ -222,7 +345,8 @@ function StockChart({ data }) {
         },
 
         timeScale: {
-          borderColor: "#e2e8f0",
+          borderColor:
+            initialTheme.timeScale.borderColor,
 
           rightOffset: 5,
 
@@ -287,6 +411,31 @@ function StockChart({ data }) {
   }, []);
 
 
+  useEffect(() => {
+
+    const chart = chartRef.current;
+
+    if (!chart) {
+      return;
+    }
+
+
+    chart.applyOptions({
+      layout: chartTheme.layout,
+      grid: chartTheme.grid,
+      rightPriceScale: {
+        borderColor:
+          chartTheme.rightPriceScale.borderColor,
+      },
+      timeScale: {
+        borderColor:
+          chartTheme.timeScale.borderColor,
+      },
+    });
+
+  }, [chartTheme]);
+
+
   /*
    * Create price series.
    */
@@ -329,19 +478,7 @@ function StockChart({ data }) {
 
       const series = chart.addSeries(
         CandlestickSeries,
-        {
-          upColor: "#16a34a",
-
-          downColor: "#dc2626",
-
-          borderUpColor: "#16a34a",
-
-          borderDownColor: "#dc2626",
-
-          wickUpColor: "#16a34a",
-
-          wickDownColor: "#dc2626",
-        }
+        chartTheme.candleColors
       );
 
 
@@ -383,7 +520,7 @@ function StockChart({ data }) {
       const series = chart.addSeries(
         LineSeries,
         {
-          color: "#0f172a",
+          color: chartTheme.lineSeriesColor,
 
           lineWidth: 3,
 
@@ -421,6 +558,7 @@ function StockChart({ data }) {
   }, [
     filteredData,
     chartType,
+    chartTheme,
   ]);
 
 
@@ -478,7 +616,12 @@ function StockChart({ data }) {
       const series = chart.addSeries(
         LineSeries,
         {
-          color: ma.colour,
+          color:
+            ma.colour[
+              themeMode === "dark"
+                ? "dark"
+                : "light"
+            ],
 
           lineWidth:
             ma.key === "sma200"
@@ -526,6 +669,7 @@ function StockChart({ data }) {
   }, [
     filteredData,
     visibleMAs,
+    themeMode,
   ]);
 
 
@@ -691,7 +835,11 @@ function StockChart({ data }) {
                   className="ma-colour-dot"
                   style={{
                     backgroundColor:
-                      ma.colour,
+                      ma.colour[
+                        themeMode === "dark"
+                          ? "dark"
+                          : "light"
+                      ],
                   }}
                 />
 

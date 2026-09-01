@@ -15,12 +15,50 @@ function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] =
     useState(false);
 
+  const [theme, setTheme] = useState("light");
+
   const menuRef = useRef(null);
 
 
   /*
    * Close the dropdown when clicking elsewhere.
    */
+
+  useEffect(() => {
+
+    const savedTheme =
+      window.localStorage.getItem(
+        "stock-dashboard-theme"
+      );
+
+    if (savedTheme === "dark" || savedTheme === "light") {
+      setTheme(savedTheme);
+      return;
+    }
+
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+
+    setTheme(prefersDark ? "dark" : "light");
+
+  }, []);
+
+
+  useEffect(() => {
+
+    document.documentElement.setAttribute(
+      "data-theme",
+      theme
+    );
+
+    window.localStorage.setItem(
+      "stock-dashboard-theme",
+      theme
+    );
+
+  }, [theme]);
+
 
   useEffect(() => {
 
@@ -97,6 +135,16 @@ function Navbar() {
 
     setMenuOpen(false);
 
+  };
+
+
+  const isDarkMode = theme === "dark";
+
+
+  const handleThemeToggle = () => {
+    setTheme((currentTheme) =>
+      currentTheme === "dark" ? "light" : "dark"
+    );
   };
 
 
@@ -226,6 +274,31 @@ function Navbar() {
           >
             About
           </NavLink>
+
+
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={handleThemeToggle}
+            aria-label={
+              isDarkMode
+                ? "Switch to light mode"
+                : "Switch to dark mode"
+            }
+            title={
+              isDarkMode
+                ? "Switch to light mode"
+                : "Switch to dark mode"
+            }
+          >
+            <span className="theme-toggle-icon">
+              {isDarkMode ? "☀" : "☾"}
+            </span>
+
+            <span className="theme-toggle-label">
+              {isDarkMode ? "Light" : "Dark"}
+            </span>
+          </button>
 
 
           {/* Logged out */}

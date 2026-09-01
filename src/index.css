@@ -107,3 +107,238 @@ input {
 .page-content {
   flex: 1;
 }
+
+
+[data-theme="dark"] {
+  --bg: #08131f;
+  --surface: #0f1f31;
+  --surface-soft: #13283f;
+  --text: #e3eef8;
+  --text-soft: #9db5cc;
+  --border: #23405e;
+  --brand: #4fc0da;
+  --brand-strong: #75d8ee;
+  --accent: #2abda4;
+}
+
+
+[data-theme="dark"] body {
+  color: var(--text);
+  background:
+    radial-gradient(
+      1300px 540px at 2% -10%,
+      rgba(42, 189, 164, 0.17) 0%,
+      rgba(42, 189, 164, 0) 60%
+    ),
+    radial-gradient(
+      1000px 520px at 100% -10%,
+      rgba(79, 192, 218, 0.18) 0%,
+      rgba(79, 192, 218, 0) 72%
+    ),
+    var(--bg);
+}
+
+
+[data-theme="dark"] .hero::before,
+[data-theme="dark"] .introduction-content,
+[data-theme="dark"] .about-section,
+[data-theme="dark"] .about-tech-card,
+[data-theme="dark"] .about-features > div,
+[data-theme="dark"] .stock-overview,
+[data-theme="dark"] .analysis-section,
+[data-theme="dark"] .history-section,
+[data-theme="dark"] .loading-panel,
+[data-theme="dark"] .empty-stock-state,
+[data-theme="dark"] .login-reminder,
+[data-theme="dark"] .market-card,
+[data-theme="dark"] .indicator-card,
+[data-theme="dark"] .favourite-card,
+[data-theme="dark"] .favourites-empty,
+[data-theme="dark"] .auth-card,
+[data-theme="dark"] .chart-wrapper,
+[data-theme="dark"] .chart-controls,
+[data-theme="dark"] .chart-timeframes,
+[data-theme="dark"] .chart-toggle,
+[data-theme="dark"] .ma-button,
+[data-theme="dark"] .account-dropdown {
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+
+[data-theme="dark"] .hero h1,
+[data-theme="dark"] .introduction-content h2,
+[data-theme="dark"] .about-header h1,
+[data-theme="dark"] .about-section h2,
+[data-theme="dark"] .about-tech-card h3,
+[data-theme="dark"] .stocks-header h1,
+[data-theme="dark"] .stock-price,
+[data-theme="dark"] .ticker,
+[data-theme="dark"] .section-heading h2,
+[data-theme="dark"] .favourites-header h1,
+[data-theme="dark"] .favourite-symbol,
+[data-theme="dark"] .favourite-price,
+[data-theme="dark"] .auth-card h1,
+[data-theme="dark"] .chart-title h3,
+[data-theme="dark"] .account-dropdown-name {
+  color: var(--text);
+}
+
+
+[data-theme="dark"] .hero p,
+[data-theme="dark"] .introduction-content p,
+[data-theme="dark"] .about-header > p,
+[data-theme="dark"] .about-section > p,
+[data-theme="dark"] .about-tech-card p,
+[data-theme="dark"] .about-features p,
+[data-theme="dark"] .stocks-header p,
+[data-theme="dark"] .loading-panel p,
+[data-theme="dark"] .empty-stock-state p,
+[data-theme="dark"] .section-heading p,
+[data-theme="dark"] .favourites-header p,
+[data-theme="dark"] .favourite-label,
+[data-theme="dark"] .auth-description,
+[data-theme="dark"] .chart-title p,
+[data-theme="dark"] .account-dropdown-email,
+[data-theme="dark"] .account-dropdown-link {
+  color: var(--text-soft);
+}
+
+
+[data-theme="dark"] .hero-eyebrow,
+[data-theme="dark"] .stocks-eyebrow,
+[data-theme="dark"] .about-eyebrow,
+[data-theme="dark"] .page-eyebrow,
+[data-theme="dark"] .stock-label,
+[data-theme="dark"] .market-card,
+[data-theme="dark"] .indicator-card,
+[data-theme="dark"] .chart-timeframes button.active,
+[data-theme="dark"] .chart-toggle button.active {
+  border-color: var(--border);
+  background: var(--surface-soft);
+}
+
+
+[data-theme="dark"] .hero-eyebrow,
+[data-theme="dark"] .stocks-eyebrow,
+[data-theme="dark"] .about-eyebrow,
+[data-theme="dark"] .page-eyebrow,
+[data-theme="dark"] .stock-label {
+  color: #b9cde0;
+}
+
+
+[data-theme="dark"] .stock-search input,
+[data-theme="dark"] .form-group input {
+  border-color: var(--border);
+  background: #0b1a2a;
+  color: var(--text);
+}
+
+
+[data-theme="dark"] .stock-search input::placeholder,
+[data-theme="dark"] .form-group input::placeholder {
+  color: #7f9ab1;
+}
+
+
+[data-theme="dark"] .stock-search input:focus,
+[data-theme="dark"] .form-group input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(42, 189, 164, 0.2);
+}
+
+
+[data-theme="dark"] .chart-timeframes button,
+[data-theme="dark"] .chart-toggle button,
+[data-theme="dark"] .ma-button,
+[data-theme="dark"] .market-card span,
+[data-theme="dark"] .indicator-card span,
+[data-theme="dark"] .chart-control-label {
+  color: var(--text-soft);
+}
+
+
+[data-theme="dark"] .chart-timeframes button.active,
+[data-theme="dark"] .chart-toggle button.active,
+[data-theme="dark"] .ma-button.active {
+  color: var(--text);
+}
+
+
+[data-theme="dark"] .chart-timeframes button:hover,
+[data-theme="dark"] .chart-toggle button:hover,
+[data-theme="dark"] .ma-button:hover {
+  color: var(--text);
+}
+
+
+[data-theme="dark"] .market-card strong,
+[data-theme="dark"] .indicator-card strong,
+[data-theme="dark"] .favourite-login-button,
+[data-theme="dark"] .remove-favourite {
+  color: var(--text);
+}
+
+
+[data-theme="dark"] .primary-button,
+[data-theme="dark"] .search-button,
+[data-theme="dark"] .favourite-button,
+[data-theme="dark"] .auth-button,
+[data-theme="dark"] .favourites-add-button,
+[data-theme="dark"] .empty-button,
+[data-theme="dark"] .login-reminder a {
+  background: var(--brand);
+}
+
+
+[data-theme="dark"] .primary-button:hover,
+[data-theme="dark"] .search-button:hover:not(:disabled),
+[data-theme="dark"] .favourite-button:hover:not(:disabled),
+[data-theme="dark"] .auth-button:hover,
+[data-theme="dark"] .favourites-add-button:hover,
+[data-theme="dark"] .empty-button:hover,
+[data-theme="dark"] .login-reminder a:hover {
+  background: var(--brand-strong);
+}
+
+
+[data-theme="dark"] .secondary-button,
+[data-theme="dark"] .example-tickers button,
+[data-theme="dark"] .favourite-login-button {
+  border-color: var(--border);
+  background: var(--surface-soft);
+  color: var(--text);
+}
+
+
+[data-theme="dark"] .secondary-button:hover,
+[data-theme="dark"] .example-tickers button:hover,
+[data-theme="dark"] .favourite-login-button:hover {
+  border-color: #3d698f;
+  background: #17314a;
+  color: #e3eef8;
+}
+
+
+[data-theme="dark"] .about-disclaimer {
+  border-color: #7a6a34;
+  background: #2b2618;
+  color: #e5d09e;
+}
+
+
+[data-theme="dark"] .error-message,
+[data-theme="dark"] .favourites-error,
+[data-theme="dark"] .auth-error {
+  border-color: #77383b;
+  background: #31191b;
+  color: #f1b2b6;
+}
+
+
+[data-theme="dark"] .auth-message {
+  border-color: #236757;
+  background: #132e29;
+  color: #9de8d9;
+}
