@@ -311,21 +311,14 @@ function Favourites() {
   if (authLoading) {
 
     return (
-
       <main className="favourites-page">
-
         <div className="favourites-loading">
-
           <div className="loading-spinner"></div>
-
           <p>
             Loading...
           </p>
-
         </div>
-
       </main>
-
     );
 
   }
@@ -460,52 +453,36 @@ function Favourites() {
 
 
                 return (
-
                   <div
                     className="favourite-card"
                     key={stock.id}
                   >
-
                     <Link
                       to={`/stocks?symbol=${encodeURIComponent(
                         stock.symbol
                       )}`}
                       className="favourite-stock"
                     >
-
                       <div className="favourite-icon">
                         {stock.symbol.charAt(0)}
                       </div>
-
-
                       <div className="favourite-details">
-
                         <span className="favourite-symbol">
                           {stock.symbol}
                         </span>
-
                         <span className="favourite-label">
                           View stock analysis
                         </span>
-
                       </div>
-
                     </Link>
-
-
                     <div className="favourite-market-data">
-
                       {stock.price !== null ? (
-
                         <>
-
                           <div className="favourite-price">
                             {formatPrice(
                               stock.price
                             )}
                           </div>
-
-
                           <div
                             className={`favourite-change ${
                               isPositive
@@ -513,34 +490,24 @@ function Favourites() {
                                 : "negative"
                             }`}
                           >
-
                             <span>
                               {formatChange(
                                 stock.change
                               )}
                             </span>
-
                             <span>
                               {formatPercent(
                                 stock.changePercent
                               )}
                             </span>
-
                           </div>
-
                         </>
-
                       ) : (
-
                         <span className="price-unavailable">
                           Data unavailable
                         </span>
-
                       )}
-
                     </div>
-
-
                     <button
                       type="button"
                       className="remove-favourite"
@@ -553,9 +520,7 @@ function Favourites() {
                     >
                       ★
                     </button>
-
                   </div>
-
                 );
 
               })}

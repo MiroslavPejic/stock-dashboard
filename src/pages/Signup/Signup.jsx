@@ -79,44 +79,31 @@ function Signup() {
 
 
   return (
-
     <main className="auth-page">
-
       <div className="auth-card">
-
         <h1>
           Create your account
         </h1>
-
         <p className="auth-description">
           Create an account to save your
           favourite stocks and personalise
           your dashboard.
         </p>
-
-
         {error && (
           <div className="auth-error">
             {error}
           </div>
         )}
-
-
         {message && (
           <div className="auth-message">
             {message}
           </div>
         )}
-
-
         <form onSubmit={handleSubmit}>
-
           <div className="form-group">
-
             <label htmlFor="email">
               Email
             </label>
-
             <input
               id="email"
               type="email"
@@ -127,16 +114,11 @@ function Signup() {
               required
               placeholder="you@example.com"
             />
-
           </div>
-
-
           <div className="form-group">
-
             <label htmlFor="password">
               Password
             </label>
-
             <input
               id="password"
               type="password"
@@ -148,37 +130,24 @@ function Signup() {
               minLength={6}
               placeholder="At least 6 characters"
             />
-
           </div>
-
-
           <button
             type="submit"
             className="auth-button"
             disabled={loading}
           >
-
             {loading
               ? "Creating account..."
               : "Create account"}
-
           </button>
-
         </form>
-
-
         <p className="auth-footer">
-
           Already have an account?{" "}
-
           <Link to="/login">
             Log in
           </Link>
-
         </p>
-
       </div>
-
     </main>
   );
 }

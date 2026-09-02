@@ -472,41 +472,27 @@ function Stocks() {
 
 
   return (
-
     <main className="stocks-page">
-
       <div className="stocks-container">
-
         {/* Page Header */}
-
         <div className="stocks-header">
-
           <div className="stocks-eyebrow">
             Market Analysis
           </div>
-
-
           <h1>
             Stock Analysis
           </h1>
-
-
           <p>
             Search for a company to view its
             price, market data and technical
             indicators.
           </p>
-
         </div>
-
-
         {/* Search */}
-
         <form
           className="stock-search"
           onSubmit={handleSearch}
         >
-
           <input
             type="text"
             value={symbol}
@@ -518,110 +504,66 @@ function Stocks() {
             placeholder="Enter ticker e.g. AAPL"
             aria-label="Stock ticker"
           />
-
-
           <button
             type="submit"
             disabled={loading}
             className="search-button"
           >
-
             {loading ? (
-
               <>
-
                 <span className="loading-spinner"></span>
-
                 <span>
                   Analysing...
                 </span>
-
               </>
-
             ) : (
-
               "Analyse Stock"
-
             )}
-
           </button>
-
         </form>
-
-
         {/* Error */}
-
         {error && (
-
           <div className="error-message">
             {error}
           </div>
-
         )}
-
-
         {/* Loading */}
-
         {loading && (
-
           <section className="loading-panel">
-
             <div className="loading-animation">
-
               <span></span>
-
               <span></span>
-
               <span></span>
-
             </div>
-
-
             <h3>
               Analysing{" "}
               {symbol.toUpperCase()}
             </h3>
-
-
             <p>
               Retrieving historical market
               data and calculating technical
               indicators...
             </p>
-
           </section>
-
         )}
-
-
         {/* Empty state */}
-
         {!stock &&
           !loading &&
           !error && (
-
             <section className="empty-stock-state">
-
               <div className="empty-stock-icon">
                 ↗
               </div>
-
-
               <h2>
                 Search for a stock
               </h2>
-
-
               <p>
                 Enter a ticker symbol above to
                 view price data, historical
                 performance and technical
                 indicators.
               </p>
-
-
               <div className="example-tickers">
-
                 <button
                   type="button"
                   onClick={() =>
@@ -630,8 +572,6 @@ function Stocks() {
                 >
                   AAPL
                 </button>
-
-
                 <button
                   type="button"
                   onClick={() =>
@@ -640,8 +580,6 @@ function Stocks() {
                 >
                   MSFT
                 </button>
-
-
                 <button
                   type="button"
                   onClick={() =>
@@ -650,8 +588,6 @@ function Stocks() {
                 >
                   NVDA
                 </button>
-
-
                 <button
                   type="button"
                   onClick={() =>
@@ -660,48 +596,29 @@ function Stocks() {
                 >
                   GOOGL
                 </button>
-
               </div>
-
             </section>
-
           )}
-
-
         {/* Stock Results */}
-
         {stock &&
           indicators && (
-
             <>
-
               {/* Stock Overview */}
-
               <section className="stock-overview">
-
                 <div>
-
                   <div className="stock-title">
-
                     <span className="ticker">
                       {stock.symbol}
                     </span>
-
-
                     <span className="stock-label">
                       Equity
                     </span>
-
                   </div>
-
-
                   <div className="stock-price">
                     {formatPrice(
                       stock.price
                     )}
                   </div>
-
-
                   <div
                     className={`stock-change ${
                       stock.change >= 0
@@ -709,29 +626,20 @@ function Stocks() {
                         : "negative"
                     }`}
                   >
-
                     <span>
                       {formatChange(
                         stock.change
                       )}
                     </span>
-
-
                     <span>
                       {formatPercent(
                         stock.changePercent
                       )}
                     </span>
-
                   </div>
-
                 </div>
-
-
                 {/* Favourite */}
-
                 {user ? (
-
                   <button
                     type="button"
                     className={`favourite-button ${
@@ -756,284 +664,182 @@ function Stocks() {
                         : "Add to favourites"
                     }
                   >
-
                     <span className="favourite-star">
-
                       {favouriteLoading
                         ? "..."
                         : isCurrentStockFavourite
                           ? "★"
                           : "☆"}
-
                     </span>
-
-
                     <span>
                       {isCurrentStockFavourite
                         ? "Favourite"
                         : "Add to favourites"}
                     </span>
-
                   </button>
-
                 ) : (
-
                   <Link
                     to="/login"
                     className="favourite-login-button"
                   >
-
                     <span>
                       ☆
                     </span>
-
                     Sign in to save
-
                   </Link>
-
                 )}
-
               </section>
-
-
               {/* Market Information */}
-
               <section className="market-grid">
-
                 <div className="market-card">
-
                   <span>
                     Open
                   </span>
-
                   <strong>
                     {formatPrice(
                       stock.open
                     )}
                   </strong>
-
                 </div>
-
-
                 <div className="market-card">
-
                   <span>
                     Previous Close
                   </span>
-
                   <strong>
                     {formatPrice(
                       stock.previousClose
                     )}
                   </strong>
-
                 </div>
-
-
                 <div className="market-card">
-
                   <span>
                     Day High
                   </span>
-
                   <strong>
                     {formatPrice(
                       stock.high
                     )}
                   </strong>
-
                 </div>
-
-
                 <div className="market-card">
-
                   <span>
                     Day Low
                   </span>
-
                   <strong>
                     {formatPrice(
                       stock.low
                     )}
                   </strong>
-
                 </div>
-
-
                 <div className="market-card">
-
                   <span>
                     Volume
                   </span>
-
                   <strong>
                     {formatNumber(
                       stock.volume
                     )}
                   </strong>
-
                 </div>
-
-
                 <div className="market-card">
-
                   <span>
                     Latest Trading Day
                   </span>
-
                   <strong>
                     {stock.tradingDay}
                   </strong>
-
                 </div>
-
               </section>
-
-
               {/* Technical Analysis */}
-
               <section className="analysis-section">
-
                 <div className="section-heading">
-
                   <div>
-
                     <h2>
                       Technical Analysis
                     </h2>
-
                     <p>
                       Calculated from
                       historical daily prices.
                     </p>
-
                   </div>
-
                 </div>
-
-
                 <div className="indicator-grid">
-
                   <div className="indicator-card">
-
                     <span>
                       20 Day SMA
                     </span>
-
                     <strong>
                       {formatPrice(
                         indicators.sma20
                       )}
                     </strong>
-
                   </div>
-
-
                   <div className="indicator-card">
-
                     <span>
                       50 Day SMA
                     </span>
-
                     <strong>
                       {formatPrice(
                         indicators.sma50
                       )}
                     </strong>
-
                   </div>
-
-
                   <div className="indicator-card">
-
                     <span>
                       100 Day SMA
                     </span>
-
                     <strong>
                       {formatPrice(
                         indicators.sma100
                       )}
                     </strong>
-
                   </div>
-
-
                   <div className="indicator-card highlight">
-
                     <span>
                       200 Day SMA
                     </span>
-
                     <strong>
                       {formatPrice(
                         indicators.sma200
                       )}
                     </strong>
-
                   </div>
-
-
                   <div className="indicator-card">
-
                     <span>
                       RSI (14)
                     </span>
-
                     <strong>
                       {formatNumber(
                         indicators.rsi
                       )}
                     </strong>
-
                   </div>
-
                 </div>
-
               </section>
-
-
               {/* Historical Data */}
-
               <section className="history-section">
-
                 <div className="section-heading">
-
                   <div>
-
                     <h2>
                       Historical Data
                     </h2>
-
                     <p>
                       {history.length.toLocaleString()}
                       {" "}
                       trading days available.
                     </p>
-
                   </div>
-
                 </div>
-
-
                 <div className="chart-container">
-
                   <StockChart
                     data={history}
                   />
-
                 </div>
-
               </section>
-
             </>
-
           )}
-
       </div>
-
     </main>
-
   );
 
 }

@@ -57,36 +57,25 @@ function Login() {
 
 
   return (
-
     <main className="auth-page">
-
       <div className="auth-card">
-
         <h1>
           Welcome back
         </h1>
-
         <p className="auth-description">
           Log in to access your personalised
           Stock Dashboard.
         </p>
-
-
         {error && (
           <div className="auth-error">
             {error}
           </div>
         )}
-
-
         <form onSubmit={handleSubmit}>
-
           <div className="form-group">
-
             <label htmlFor="email">
               Email
             </label>
-
             <input
               id="email"
               type="email"
@@ -97,16 +86,11 @@ function Login() {
               required
               placeholder="you@example.com"
             />
-
           </div>
-
-
           <div className="form-group">
-
             <label htmlFor="password">
               Password
             </label>
-
             <input
               id="password"
               type="password"
@@ -117,37 +101,24 @@ function Login() {
               required
               placeholder="Your password"
             />
-
           </div>
-
-
           <button
             type="submit"
             className="auth-button"
             disabled={loading}
           >
-
             {loading
               ? "Logging in..."
               : "Log in"}
-
           </button>
-
         </form>
-
-
         <p className="auth-footer">
-
           Don't have an account?{" "}
-
           <Link to="/signup">
             Create one
           </Link>
-
         </p>
-
       </div>
-
     </main>
   );
 }

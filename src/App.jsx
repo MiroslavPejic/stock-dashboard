@@ -15,58 +15,40 @@ import Favourites from "./pages/Favourites/Favourites";
 function App() {
   return (
     <BrowserRouter>
-
       <div className="app">
-
         <Navbar />
-
         <div className="page-content">
-
           <Routes>
-
             {/* Public pages */}
-
             <Route
               path="/"
               element={<Home />}
             />
-
             <Route
               path="/stocks"
               element={<Stocks />}
             />
-
             <Route
               path="/about"
               element={<About />}
             />
-
-
             {/* Authentication */}
-
             <Route
               path="/login"
               element={<Login />}
             />
-
             <Route
               path="/signup"
               element={<Signup />}
             />
-
             <Route
               path="/favourites"
               element={<Favourites />}
             />
-
           </Routes>
-
         </div>
-
         <Footer />
-
       </div>
-
     </BrowserRouter>
   );
 }

@@ -57,6 +57,64 @@ const MA_OPTIONS = [
 ];
 
 
+const RSI_PERIOD = 14;
+
+
+function calculateRSI(data, period = RSI_PERIOD) {
+  const values = Array(data.length).fill(null);
+
+  if (data.length <= period) {
+    return values;
+  }
+
+  let gains = 0;
+  let losses = 0;
+
+  for (let index = 1; index <= period; index += 1) {
+    const change =
+      Number(data[index].close) -
+      Number(data[index - 1].close);
+
+    gains += Math.max(change, 0);
+    losses += Math.max(-change, 0);
+  }
+
+  let averageGain = gains / period;
+  let averageLoss = losses / period;
+
+  const getValue = () => {
+    if (averageGain === 0 && averageLoss === 0) {
+      return 50;
+    }
+
+    if (averageLoss === 0) {
+      return 100;
+    }
+
+    return 100 - 100 / (1 + averageGain / averageLoss);
+  };
+
+  values[period] = getValue();
+
+  for (let index = period + 1; index < data.length; index += 1) {
+    const change =
+      Number(data[index].close) -
+      Number(data[index - 1].close);
+
+    averageGain =
+      (averageGain * (period - 1) + Math.max(change, 0)) /
+      period;
+    averageLoss =
+      (averageLoss * (period - 1) + Math.max(-change, 0)) /
+      period;
+
+    values[index] = getValue();
+  }
+
+  return values;
+}
+
+
 function getChartTheme(mode) {
   if (mode === "dark") {
     return {
@@ -137,6 +195,8 @@ function StockChart({ data }) {
 
   const maSeriesRefs = useRef([]);
 
+  const rsiSeriesRef = useRef(null);
+
 
   const [timeframe, setTimeframe] = useState("1Y");
 
@@ -148,6 +208,8 @@ function StockChart({ data }) {
     sma100: true,
     sma200: true,
   });
+
+  const [showRSI, setShowRSI] = useState(false);
 
   const [themeMode, setThemeMode] = useState(
     () =>
@@ -170,6 +232,8 @@ function StockChart({ data }) {
    */
 
   const chartDataWithIndicators = useMemo(() => {
+
+    const rsiValues = calculateRSI(data);
 
     return data.map((item, index) => ({
 
@@ -218,6 +282,8 @@ function StockChart({ data }) {
                 0
               ) / 200
           : null,
+
+      rsi: rsiValues[index],
 
     }));
 
@@ -674,6 +740,100 @@ function StockChart({ data }) {
 
 
   /*
+   * Create the RSI in a separate lower pane.
+   */
+
+  useEffect(() => {
+
+    const chart = chartRef.current;
+
+    if (!chart) {
+      return;
+    }
+
+    if (rsiSeriesRef.current) {
+      try {
+        chart.removeSeries(rsiSeriesRef.current);
+      } catch (error) {
+        console.warn(
+          "Unable to remove previous RSI series",
+          error
+        );
+      }
+
+      rsiSeriesRef.current = null;
+    }
+
+    if (!showRSI) {
+      return;
+    }
+
+    const series = chart.addSeries(
+      LineSeries,
+      {
+        color:
+          themeMode === "dark"
+            ? "#a78bfa"
+            : "#6d28d9",
+        lineWidth: 2,
+        priceLineVisible: false,
+        lastValueVisible: true,
+        title: `RSI (${RSI_PERIOD})`,
+        priceFormat: {
+          type: "price",
+          precision: 0,
+          minMove: 1,
+        },
+        autoscaleInfoProvider: () => ({
+          priceRange: {
+            minValue: 0,
+            maxValue: 100,
+          },
+        }),
+      },
+      1
+    );
+
+    series.setData(
+      filteredData
+        .filter((item) => item.rsi !== null)
+        .map((item) => ({
+          time: item.date,
+          value: item.rsi,
+        }))
+    );
+
+    series.createPriceLine({
+      price: 70,
+      color: themeMode === "dark" ? "#7f1d1d" : "#fecaca",
+      lineWidth: 1,
+      lineStyle: 2,
+      axisLabelVisible: true,
+      title: "Overbought",
+    });
+
+    series.createPriceLine({
+      price: 30,
+      color: themeMode === "dark" ? "#14532d" : "#bbf7d0",
+      lineWidth: 1,
+      lineStyle: 2,
+      axisLabelVisible: true,
+      title: "Oversold",
+    });
+
+    chart.panes()[1]?.setHeight(140);
+    rsiSeriesRef.current = series;
+
+    chart.timeScale().fitContent();
+
+  }, [
+    filteredData,
+    showRSI,
+    themeMode,
+  ]);
+
+
+  /*
    * Toggle moving average.
    */
 
@@ -695,42 +855,28 @@ function StockChart({ data }) {
 
   return (
     <div className="stock-chart">
-
-
       {/* =========================
           Header
           ========================= */}
-
       <div className="chart-header">
-
         <div className="chart-title">
-
           <h3>
             Price History
           </h3>
-
           <p>
             Price and moving averages
           </p>
-
         </div>
-
-
         <div className="chart-timeframes">
-
           {TIMEFRAMES.map((option) => (
-
             <button
               key={option.label}
-
               type="button"
-
               className={
                 timeframe === option.label
                   ? "active"
                   : ""
               }
-
               onClick={() =>
                 setTimeframe(
                   option.label
@@ -739,98 +885,66 @@ function StockChart({ data }) {
             >
               {option.label}
             </button>
-
           ))}
-
         </div>
-
       </div>
-
-
       {/* =========================
           Controls
           ========================= */}
-
       <div className="chart-controls">
-
-
         {/* Chart type */}
-
         <div className="chart-control-group">
-
           <span className="chart-control-label">
             Chart
           </span>
-
           <div className="chart-toggle">
-
             <button
               type="button"
-
               className={
                 chartType === "line"
                   ? "active"
                   : ""
               }
-
               onClick={() =>
                 setChartType("line")
               }
             >
               Line
             </button>
-
-
             <button
               type="button"
-
               className={
                 chartType === "candles"
                   ? "active"
                   : ""
               }
-
               onClick={() =>
                 setChartType("candles")
               }
             >
               Candles
             </button>
-
           </div>
-
         </div>
-
-
         {/* Moving averages */}
-
         <div className="chart-control-group">
-
           <span className="chart-control-label">
             Moving averages
           </span>
-
-
           <div className="ma-toggle-group">
-
             {MA_OPTIONS.map((ma) => (
-
               <button
                 key={ma.key}
-
                 type="button"
-
                 className={
                   visibleMAs[ma.key]
                     ? "ma-button active"
                     : "ma-button"
                 }
-
                 onClick={() =>
                   toggleMA(ma.key)
                 }
               >
-
                 <span
                   className="ma-colour-dot"
                   style={{
@@ -842,29 +956,38 @@ function StockChart({ data }) {
                       ],
                   }}
                 />
-
                 {ma.label}
-
               </button>
-
             ))}
-
           </div>
-
         </div>
-
+        <div className="chart-control-group">
+          <span className="chart-control-label">
+            Indicators
+          </span>
+          <div className="ma-toggle-group">
+            <button
+              type="button"
+              className={
+                showRSI
+                  ? "ma-button active"
+                  : "ma-button"
+              }
+              onClick={() => setShowRSI((current) => !current)}
+              aria-pressed={showRSI}
+            >
+              RSI (14)
+            </button>
+          </div>
+        </div>
       </div>
-
-
       {/* =========================
           Chart
           ========================= */}
-
       <div
         ref={chartContainerRef}
         className="chart-wrapper"
       />
-
     </div>
   );
 }

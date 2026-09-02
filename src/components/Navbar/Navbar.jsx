@@ -183,13 +183,9 @@ function Navbar() {
 
 
   return (
-
     <nav className="navbar">
-
       <div className="navbar-container">
-
         {/* Logo */}
-
         <NavLink
           to="/"
           className="navbar-logo"
@@ -198,18 +194,13 @@ function Navbar() {
             setMenuOpen(false);
           }}
         >
-
           <span className="navbar-logo-icon">
             S
           </span>
-
           <span className="navbar-logo-text">
             Stock Dashboard
           </span>
-
         </NavLink>
-
-
         <button
           type="button"
           className={`navbar-menu-toggle ${
@@ -227,16 +218,12 @@ function Navbar() {
           <span />
           <span />
         </button>
-
-
         {/* Navigation */}
-
         <div
           className={`navbar-links ${
             mobileMenuOpen ? "open" : ""
           }`}
         >
-
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -248,8 +235,6 @@ function Navbar() {
           >
             Home
           </NavLink>
-
-
           <NavLink
             to="/stocks"
             className={({ isActive }) =>
@@ -261,8 +246,6 @@ function Navbar() {
           >
             Stocks
           </NavLink>
-
-
           <NavLink
             to="/about"
             className={({ isActive }) =>
@@ -274,8 +257,6 @@ function Navbar() {
           >
             About
           </NavLink>
-
-
           <button
             type="button"
             className="theme-toggle"
@@ -294,19 +275,13 @@ function Navbar() {
             <span className="theme-toggle-icon">
               {isDarkMode ? "☀" : "☾"}
             </span>
-
             <span className="theme-toggle-label">
               {isDarkMode ? "Light" : "Dark"}
             </span>
           </button>
-
-
           {/* Logged out */}
-
           {!user && (
-
             <>
-
               <NavLink
                 to="/login"
                 className={({ isActive }) =>
@@ -318,8 +293,6 @@ function Navbar() {
               >
                 Login
               </NavLink>
-
-
               <NavLink
                 to="/signup"
                 className="nav-signup"
@@ -329,21 +302,14 @@ function Navbar() {
               >
                 Sign Up
               </NavLink>
-
             </>
-
           )}
-
-
           {/* Logged in */}
-
           {user && (
-
             <div
               className="navbar-account"
               ref={menuRef}
             >
-
               <button
                 type="button"
                 className="account-button"
@@ -351,19 +317,14 @@ function Navbar() {
                   setMenuOpen(!menuOpen)
                 }
               >
-
                 <span className="account-avatar">
                   {getDisplayName()
                     .charAt(0)
                     .toUpperCase()}
                 </span>
-
-
                 <span className="account-name">
                   {getDisplayName()}
                 </span>
-
-
                 <span
                   className={`account-chevron ${
                     menuOpen ? "open" : ""
@@ -371,30 +332,18 @@ function Navbar() {
                 >
                   ▾
                 </span>
-
               </button>
-
-
               {menuOpen && (
-
                 <div className="account-dropdown">
-
                   <div className="account-dropdown-header">
-
                     <span className="account-dropdown-name">
                       {getDisplayName()}
                     </span>
-
                     <span className="account-dropdown-email">
                       {user.email}
                     </span>
-
                   </div>
-
-
                   <div className="account-dropdown-divider" />
-
-
                   <Link
                     to="/dashboard"
                     className="account-dropdown-link"
@@ -406,8 +355,6 @@ function Navbar() {
                     <span>▣</span>
                     My Dashboard
                   </Link>
-
-
                   <Link
                     to="/favourites"
                     className="account-dropdown-link"
@@ -419,11 +366,7 @@ function Navbar() {
                     <span>★</span>
                     Favourite Stocks
                   </Link>
-
-
                   <div className="account-dropdown-divider" />
-
-
                   <button
                     type="button"
                     className="account-dropdown-logout"
@@ -432,21 +375,13 @@ function Navbar() {
                     <span>↪</span>
                     Log out
                   </button>
-
                 </div>
-
               )}
-
             </div>
-
           )}
-
         </div>
-
       </div>
-
     </nav>
-
   );
 }
 
